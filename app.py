@@ -14,7 +14,7 @@ pages = {
     "1. Vendas por Mês e Categoria": "_1_📊_vendas_por_mês_e_categoria",
     "2. Mapa de Vendas por Região": "_2_🗺️_mapa_de_vendas_por_região",
     "3. Avaliação vs Tempo de Entrega": "_3_📈_avaliação_vs_entrega",
-    "4. Análise de Vendedores": "_4_🧑‍💼_Análise_de_Vendedores"
+    "4. Análise de Vendedores": "_4_🧑_💼_análise_de_vendedores"
 }
 
 selection = st.sidebar.radio("Ir para:", list(pages.keys()))
