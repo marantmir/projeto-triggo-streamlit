@@ -3,14 +3,13 @@ import os
 import kagglehub
 
 def load_data():
-    # Baixar dataset do Kaggle
+    # Baixar dataset automaticamente
     path = kagglehub.dataset_download("olistbr/brazilian-ecommerce")
-    print("Path to dataset files:", path)
+    print(f"Dataset baixado em: {path}")
 
-    # Listar todos os CSVs baixados
+    # Carregar todos os CSVs na pasta
     all_files = [os.path.join(path, f) for f in os.listdir(path) if f.endswith('.csv')]
 
-    # Mapear os datasets pelos nomes dos arquivos
     dfs = {}
     for file in all_files:
         filename = os.path.basename(file).replace(".csv", "")
@@ -19,6 +18,8 @@ def load_data():
             print(f"✅ Carregado: {filename}")
         except Exception as e:
             print(f"❌ Erro ao carregar {filename}: {e}")
+
+    return dfs
 
     # Junção das tabelas principais
     orders = dfs['olist_orders_dataset']
