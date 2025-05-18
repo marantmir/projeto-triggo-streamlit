@@ -1,6 +1,11 @@
 import streamlit as st
 import os
 
+import os
+
+print("Diretório atual:", os.getcwd())
+print("Conteúdo do diretório:")
+print(os.listdir())
 # Configuração inicial
 st.set_page_config(page_title="Dashboard E-commerce", layout="wide")
 
