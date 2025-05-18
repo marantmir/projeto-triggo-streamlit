@@ -4,9 +4,9 @@ import os
 # Configuração inicial
 st.set_page_config(page_title="Dashboard E-commerce", layout="wide")
 
-# Título e descrição
+# Título e navegação
 st.title("🛒 Dashboard de Análise de Vendas - Olist")
-st.markdown("Este dashboard foi desenvolvido como parte do teste técnico da Triggo.ai.")
+st.markdown("Projeto desenvolvido como parte do teste técnico da Triggo.ai.")
 
 # Navegação
 st.sidebar.title("📌 Navegação")
@@ -19,13 +19,12 @@ pages = {
 
 selection = st.sidebar.radio("Ir para:", list(pages.keys()))
 
-# Carregar página selecionada
-page = pages[selection] + ".py"
-
-page_path = f"pages/{page}"
+# Caminho absoluto para evitar erros
+current_dir = os.path.dirname(__file__)
+page_path = os.path.join(current_dir, 'pages', f"{pages[selection]}.py")
 
 if os.path.exists(page_path):
-    with open(page_path, encoding="utf-8") as f:
+    with open(page_path, 'r', encoding='utf-8') as f:
         code = compile(f.read(), page_path, 'exec')
         exec(code)
 else:
