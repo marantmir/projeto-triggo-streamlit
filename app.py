@@ -11,7 +11,7 @@ st.markdown("Projeto desenvolvido como parte do teste técnico da Triggo.ai.")
 # Navegação
 st.sidebar.title("📌 Navegação")
 pages = {
-    "1. Vendas por Mês e Categoria": "_1_📊_Vendas_por_Mês_e_Categoria",
+    "1. Vendas por Mês e Categoria": "_1_📊_vendas_por_mês_e_categoria",
     "2. Mapa de Vendas por Região": "_2_🗺️_Mapa_de_Vendas_por_Região",
     "3. Avaliação vs Tempo de Entrega": "_3_📈_Avaliação_vs_Entrega",
     "4. Análise de Vendedores": "_4_🧑‍💼_Análise_de_Vendedores"
