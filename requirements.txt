@@ -1,3 +1,4 @@
+kagglehub
 streamlit==1.29.0
 pandas==2.0.3
 numpy==1.26.0
