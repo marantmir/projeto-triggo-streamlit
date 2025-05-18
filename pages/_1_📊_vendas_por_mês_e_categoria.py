@@ -11,7 +11,6 @@ def get_monthly_data():
 def main():
     st.header("📅 Vendas por Mês")
     monthly_orders = get_monthly_data()
-
-    st.line_chart(monthly_orders.set_index('purchase_month')[['order_count']], use_container_width=True)
+    st.line_chart(monthly_orders.set_index('purchase_month'))
 
 main()
