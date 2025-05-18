@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 
 # Configuração inicial
 st.set_page_config(page_title="Dashboard E-commerce", layout="wide")
@@ -21,6 +22,12 @@ selection = st.sidebar.radio("Ir para:", list(pages.keys()))
 # Carregar página selecionada
 page = pages[selection] + ".py"
 
-with open(f"pages/{page}", encoding="utf-8") as f:
-    code = compile(f.read(), page, 'exec')
-    exec(code)
+page_path = f"pages/{page}"
+
+if os.path.exists(page_path):
+    with open(page_path, encoding="utf-8") as f:
+        code = compile(f.read(), page_path, 'exec')
+        exec(code)
+else:
+    st.error(f"Arquivo não encontrado: {page_path}")
+    st.stop()
