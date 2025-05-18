@@ -1,15 +1,13 @@
 import streamlit as st
 import pandas as pd
-from utils.load_data import download_and_cache_data, load_data_from_sql
-from utils.db_utils import init_db
+from utils.load_data import load_data_from_sql, download_and_cache_data
 
-init_db()
 st.set_page_config(page_title="Dashboard E-commerce", layout="wide")
 
 st.title("🛒 Dashboard de Análise de Vendas - Olist")
-st.markdown("Este dashboard foi desenvolvido como parte do teste técnico da Triggo.ai.")
+st.markdown("Projeto desenvolvido como parte do teste técnico da Triggo.ai.")
 
-# Navegação lateral
+# Navegação
 st.sidebar.title("📌 Navegação")
 pages = {
     "1. Vendas por Mês e Categoria": "_1_📊_Vendas_por_Mês_e_Categoria",
@@ -20,16 +18,20 @@ pages = {
 
 selection = st.sidebar.radio("Ir para:", list(pages.keys()))
 
-# Se não houver dados no SQLite, baixa e salva
+# Carregar dados do SQLite ou baixar se não existirem
 if 'df' not in st.session_state:
-    with st.spinner("🔄 Baixando e preparando dados pela primeira vez..."):
-        st.session_state.df = download_and_cache_data()
+    with st.spinner("🔄 Baixando dados do Kaggle pela primeira vez..."):
+        df = download_and_cache_data()
+        st.session_state.df = df
 else:
     with st.spinner("🔁 Carregando dados do SQLite..."):
-        st.session_state.df = load_data_from_sql()
+        df = st.session_state.df
 
 page_file = pages[selection] + ".py"
 
-with open(f"pages/{page_file}", encoding="utf-8") as f:
-    code = compile(f.read(), page_file, 'exec')
-    exec(code)
+try:
+    with open(f"pages/{page_file}.py", encoding="utf-8") as f:
+        code = compile(f.read(), page_file, 'exec')
+        exec(code)
+except FileNotFoundError:
+    st.error(f"Arquivo {page_file} não encontrado na pasta 'pages/'.")
