@@ -1,37 +1,33 @@
 import streamlit as st
-import os
+import pandas as pd
+from utils.load_data import download_and_cache_data, load_data_from_sql
 
-import os
-
-print("Diretório atual:", os.getcwd())
-print("Conteúdo do diretório:")
-print(os.listdir())
-# Configuração inicial
 st.set_page_config(page_title="Dashboard E-commerce", layout="wide")
 
-# Título e navegação
 st.title("🛒 Dashboard de Análise de Vendas - Olist")
-st.markdown("Projeto desenvolvido como parte do teste técnico da Triggo.ai.")
+st.markdown("Este dashboard foi desenvolvido como parte do teste técnico da Triggo.ai.")
 
-# Navegação
+# Navegação lateral
 st.sidebar.title("📌 Navegação")
 pages = {
-    "1. Vendas por Mês e Categoria": "_1_📊_vendas_por_mês_e_categoria",
-    "2. Mapa de Vendas por Região": "_2_🗺️_mapa_de_vendas_por_região",
-    "3. Avaliação vs Tempo de Entrega": "_3_📈_avaliação_vs_entrega",
-    "4. Análise de Vendedores": "_4_🧑_💼_análise_de_vendedores"
+    "1. Vendas por Mês e Categoria": "_1_📊_Vendas_por_Mês_e_Categoria",
+    "2. Mapa de Vendas por Região": "_2_🗺️_Mapa_de_Vendas_por_Região",
+    "3. Avaliação vs Tempo de Entrega": "_3_📈_Avaliação_vs_Entrega",
+    "4. Análise de Vendedores": "_4_🧑‍💼_Análise_de_Vendedores"
 }
 
 selection = st.sidebar.radio("Ir para:", list(pages.keys()))
 
-# Caminho absoluto para evitar erros
-current_dir = os.path.dirname(__file__)
-page_path = os.path.join(current_dir, 'pages', f"{pages[selection]}.py")
-
-if os.path.exists(page_path):
-    with open(page_path, 'r', encoding='utf-8') as f:
-        code = compile(f.read(), page_path, 'exec')
-        exec(code)
+# Se não houver dados no SQLite, baixa e salva
+if 'df' not in st.session_state:
+    with st.spinner("🔄 Baixando e preparando dados pela primeira vez..."):
+        st.session_state.df = download_and_cache_data()
 else:
-    st.error(f"Arquivo não encontrado: {page_path}")
-    st.stop()
+    with st.spinner("🔁 Carregando dados do SQLite..."):
+        st.session_state.df = load_data_from_sql()
+
+page_file = pages[selection] + ".py"
+
+with open(f"pages/{page_file}", encoding="utf-8") as f:
+    code = compile(f.read(), page_file, 'exec')
+    exec(code)
