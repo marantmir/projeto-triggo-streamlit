@@ -14,3 +14,7 @@ Este é um projeto desenvolvido como parte do teste técnico do **Programa Train
 ---
 
 ## 📁 Estrutura do Projeto
+├── app.py # Ponto de entrada do Streamlit
+├── requirements.txt # Dependências necessárias
+├── data/ # Dataset CSV da Olist
+└── pages/ # Páginas individuais do dashboard
