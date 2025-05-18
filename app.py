@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
 from utils.load_data import download_and_cache_data, load_data_from_sql
+from utils.db_utils import init_db
 
+init_db()
 st.set_page_config(page_title="Dashboard E-commerce", layout="wide")
 
 st.title("🛒 Dashboard de Análise de Vendas - Olist")
